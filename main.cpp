@@ -19,7 +19,7 @@ int main(int argc, const char* argv[])
     bool right_button = OpenMenu(&window, "menu/middle.png", 2);
     if(right_button)
     {
-        Hack((argc == 2) ? (argv[1]) : "../DosBox/HACKME.COM");
+        Hack((argc == 2) ? (argv[1]) : "HACKME.COM");
     }
 
     PlaySound(&sound, &buffer, right_button ? "menu/end.wav" : "menu/gachi.wav");
