@@ -18,35 +18,35 @@
 Для того, чтобы понять, что происходит в программе я использую TurboDebugger. 
 Сначала вызываются четыре функции:
 
-<image src="for_readme/dis1.png" width=300px>
+<image src="for_readme/dis1.png" width=400px>
 
 Проанализировав, могу сказать, что первая функция рисует рамку на экран, а вторая - добавляет к ней текст. Нас это не особо интересует. Нам важнее две последние функции.
 
 Предпоследняя функция занимается записью введенного пароля в память.
 
-<image src="for_readme/dis2.png" width=300px>
+<image src="for_readme/dis2.png" width=400px>
 
-<image src="for_readme/dis3.png" width=300px>
+<image src="for_readme/dis3.png" width=400px>
 
 Как мы видим пароль записывается по ds:02F8 адресу буфера:
 
-<image src="for_readme/dis4.png" width=300px>
+<image src="for_readme/dis4.png" width=400px>
 
 Теперь разберем последнюю функцию. В ней вызывается хэш-функция, которая возращает хэш-сумму в регистре ax. Изучив ее получше, заметим, что она считает сумму ASCII-кодов каждого символа (это нам пригодится попозже).
 
-<image src="for_readme/dis5.png" width=300px>
+<image src="for_readme/dis5.png" width=400px>
 
 Далее эта сумма сравнивается с числом, которое лежит по адресу ds:0300-ds:0301:
 
-<image src="for_readme/dis6.png" width=300px>
+<image src="for_readme/dis6.png" width=400px>
 
-<image src="for_readme/dis7.png" width=300px>
+<image src="for_readme/dis7.png" width=400px>
 
 Это число следует сразу после буфера с введенным паролем. Нужно просто вслед за паролем ввести его хэш-сумму!
 
 Если я хочу, чтобы программа работала на пароль 'ANIbest!', то нужно вводить вместе с ее хеш-суммой: 'ANIbest!з':
 
-<image src="for_readme/prog4.png" width=300px>
+<image src="for_readme/prog4.png" width=400px>
 
 Юхуууу у нас все получилось!!
 
@@ -61,7 +61,7 @@
 
 Выше мы уже знали, в каком месте(в cs:025D) проверяется пароль:
 
-<image src="for_readme/dis8.png" width=300px>
+<image src="for_readme/dis8.png" width=400px>
 
 Если хэш-сумма верная, то происходит прыжок(на cs:026D). То есть для нашей цели программа заменяет все байты между этими адресами инструкциями nop (0x90).
 
@@ -106,11 +106,11 @@ make
 
 Проверим правдивость надписи на окне. Заходим в снова в TurboDebbuger. 
 
-<image src="for_readme/dis9.png" width=300px>
+<image src="for_readme/dis9.png" width=400px>
 
 Как мы видим байты действительно поменялись. Это то, что нам и было нужно. Теперь попробуем ввести любой пароль:
 
-<image src="for_readme/prog4.png" width=300px>
+<image src="for_readme/prog4.png" width=400px>
 
 У нас опять все вышло!!!
 Для особо любопытных я спрятала пасхалку. Попробуй нажать чуть выше живота Лени)
